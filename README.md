@@ -1,6 +1,6 @@
 # GArray
 
-A small (300 lines) dynamic memory allocator.
+A small (300 lines) dynamic array.
 
 ## Example
 ```C
