@@ -5,7 +5,6 @@ A small (300 lines) dynamic array.
 ## Example
 ```C
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,22 +16,31 @@ main(void)
 {
     uint32_t item_size = sizeof(int);
     uint32_t initial_size = 10;
+    uint32_t i;
 
     GArray *array = GArrayCreate(item_size, initial_size);
     if (array == NULL) 
     {   return EXIT_FAILURE;
     }
 
+    /* make all data 0's to show it works */
+    for(i = GArrayStart(array); i < GArrayEnd(array); ++i)
+    {   GArrayReplace(array, NULL, i);
+    }
+
     int value = 42;
     if (GArrayPushBack(array, &value) != EXIT_SUCCESS) 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
+
     int *p = (int *)GArrayAt(array, 0);
+
     if (p) 
-    {   printf("Value at index 0: %d\n", *p);
+    {   printf("Previous Value at index 0: %d\n", *p);
     } 
     else 
     {
@@ -68,16 +76,8 @@ main(void)
         return EXIT_FAILURE;
     }
 
-    uint32_t i;
-    for (i = GArrayStart(array); i < GArrayEnd(array); ++i) 
-    {
-        p = (int *)GArrayAt(array, i);
-        if (p) 
-        {   printf("Value at index %d: %d\n", i, *p);
-        }
-    }
-
-    printf("deleting\n");
+    printf("Value at index %d: %d\n", 1, *(int *)GArrayAt(array, 1));
+    printf("Deleting Index %d\n", 1);
 
     if (GArrayDelete(array, 1) != EXIT_SUCCESS) 
     {
