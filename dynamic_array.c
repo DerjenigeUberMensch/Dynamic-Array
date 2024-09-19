@@ -177,7 +177,7 @@ GArrayReplace(
     uint32_t index
     )
 {
-    if(!array || !item_cpy)
+    if(!array)
     {   return EXIT_FAILURE;
     }
     if(index > array->data_len)
@@ -250,14 +250,14 @@ GArrayDelete(
     }
 
     const uint32_t size = array->item_size;
-    const uint32_t BYTES_MOVE = (array->data_len - index) * size;
+    const uint32_t BYTES_MOVE = (array->data_len - index - 1) * size;
 
     uint8_t *data = array->data;
     uint8_t *src = data + (size * (index + 1));
     uint8_t *dest = data + (size * index);
 
     /* Check if last so no invalid memove */
-    if(index != array->data_len - 1)
+    if(index < array->data_len - 1)
     {   memmove(dest, src, BYTES_MOVE);
     }
 
