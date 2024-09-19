@@ -37,6 +37,7 @@ main(void)
     else 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
@@ -44,6 +45,7 @@ main(void)
     if (GArrayReplace(array, &new_value, 0) != EXIT_SUCCESS) 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
@@ -54,6 +56,7 @@ main(void)
     else 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
@@ -61,6 +64,7 @@ main(void)
     if (GArrayInsert(array, &insert_value, 1) != EXIT_SUCCESS) 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
@@ -78,6 +82,7 @@ main(void)
     if (GArrayDelete(array, 1) != EXIT_SUCCESS) 
     {
         GArrayWipe(array);
+        free(array);
         return EXIT_FAILURE;
     }
 
@@ -90,6 +95,7 @@ main(void)
     }
 
     GArrayWipe(array);
+    free(array);
     return EXIT_SUCCESS;
 }
 
