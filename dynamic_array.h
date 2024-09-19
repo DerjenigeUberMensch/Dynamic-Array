@@ -36,6 +36,7 @@
 /* G stands for generic by the way.
  */
 typedef struct GArray GArray;
+typedef struct __GArray__ __GArray__;
 /* UNUSED cause why would you use this? 
  * Encapsulation is useless at this low level. 
  * Even had said that I still use encapsulation, and half the time I only do it for sustainability of the project. 
@@ -51,6 +52,14 @@ GArray
     uint32_t data_len;
     uint32_t data_len_real;
     uint8_t pad0[4];
+};
+
+struct 
+__GArray__
+{
+    void *data;
+    uint32_t data_len;
+    uint32_t data_len_real;
 };
 
 /*
