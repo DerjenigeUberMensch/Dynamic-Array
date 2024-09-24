@@ -1,17 +1,8 @@
-
-
-
-#include "array32.h"
-
-
-
-
-#include "array8.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "array32.h"
 #include "dynamic_array.h"
 
 GArray *
@@ -19,12 +10,11 @@ GArrayCreate32(
     uint32_t base_allocate
     )
 {
-    const uint32_t item_size = sizeof(uint32_t);
     GArray *ret = malloc(sizeof(GArray));
 
     if(ret)
     {
-        uint8_t status = GArrayCreateFilled32(ret, item_size, base_allocate);
+        uint8_t status = GArrayCreateFilled32(ret, base_allocate);
         if(status == EXIT_FAILURE)
         {
             GArrayWipe32(ret);
@@ -41,7 +31,7 @@ GArrayCreateFilled32(
     uint32_t base_allocate
     )
 {
-    if(!array_return || !item_size)
+    if(!array_return)
     {   return EXIT_FAILURE;
     }
     array_return->data = NULL;
@@ -152,8 +142,8 @@ GArrayPopBack32(
     if(array->data)
     {   
         /* make sure no underflow */
-        if(array->item_len)
-        {   GArrayResize32(array, array->item_len - 1);
+        if(array->data_len)
+        {   GArrayResize32(array, array->data_len - 1);
         }
     }
     return EXIT_SUCCESS;
