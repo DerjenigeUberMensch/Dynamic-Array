@@ -7,76 +7,76 @@
 typedef struct __GArray__ GArrayP;
 
 
-GArray *
+GArrayP *
 GArrayCreateP(
     uint32_t base_allocate
     );
 
 int
 GArrayCreateFilledP(
-    GArray *array_return,
+    GArrayP *array_return,
     uint32_t base_allocate
     );
 
 void
 GArrayWipeP(
-    GArray *array
+    GArrayP *array
     );
 
 int
 GArrayResizeP(
-    GArray *array,
+    GArrayP *array,
     uint32_t item_len
     );
 
 int
 GArrayPopBackP(
-    GArray *array
+    GArrayP *array
     );
 
 int
 GArrayReplaceP(
-    GArray *array,
+    GArrayP *array,
     void *item_cpy,
     uint32_t index
     );
 
 int
 GArrayInsertP(
-    GArray *array,
+    GArrayP *array,
     void *item_cpy,
     uint32_t index
     );
 
 int
 GArrayDeleteP(
-    GArray *array,
+    GArrayP *array,
     uint32_t index
     );
 
 
 void *
 GArrayAtP(
-        GArray *array,
-        uint32_t index
-        );
+    GArrayP *array,
+    uint32_t index
+    );
 
 int
 GArrayAtSafeP(
-        GArray *array,
-        uint32_t index,
-        void *fill_return
-        );
+    GArrayP *array,
+    uint32_t index,
+    void *fill_return
+    );
 
 uint32_t
 GArrayEndP(
-        GArray *array
-        );
+    GArrayP *array
+    );
 
 uint32_t 
 GArrayStartP(
-        GArray *array
-        );
+    GArrayP *array
+    );
 
 
 #endif

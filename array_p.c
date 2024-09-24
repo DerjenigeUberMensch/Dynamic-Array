@@ -1,28 +1,23 @@
-
-
-
-#include "array_p.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "dynamic_array.h"
+#include "array_p.h"
 
-GArray *
+
+GArrayP *
 GArrayCreateP(
     uint32_t base_allocate
     )
 {
-    const uint32_t item_size = sizeof(char *);
-    GArray *ret = malloc(sizeof(GArray));
+    GArrayP *ret = malloc(sizeof(GArrayP));
 
     if(ret)
     {
-        uint8_t status = GArrayCreateFilled8(ret, item_size, base_allocate);
+        uint8_t status = GArrayCreateFilledP(ret, base_allocate);
         if(status == EXIT_FAILURE)
         {
-            GArrayWipe8(ret);
+            GArrayWipeP(ret);
             free(ret);
             ret = NULL;
         }
@@ -32,23 +27,23 @@ GArrayCreateP(
 
 int
 GArrayCreateFilledP(
-    GArray *array_return,
+    GArrayP *array_return,
     uint32_t base_allocate
     )
 {
-    if(!array_return || !item_size)
+    if(!array_return)
     {   return EXIT_FAILURE;
     }
     array_return->data = NULL;
     array_return->data_len = 0;
     array_return->data_len_real = 0;
-    GArrayResize8(array_return, base_allocate);
+    GArrayResizeP(array_return, base_allocate);
     return EXIT_SUCCESS;
 }
 
 void
 GArrayWipeP(
-    GArray *array
+    GArrayP *array
     )
 {
     if(!array)
@@ -59,7 +54,7 @@ GArrayWipeP(
 
 int
 GArrayResizeP(
-    GArray *array,
+    GArrayP *array,
     uint32_t item_len
     )
 {
@@ -112,7 +107,7 @@ GArrayResizeP(
 }
 int
 GArrayPushBackP(
-    GArray *array,
+    GArrayP *array,
     void *item_cpy
     )
 {
@@ -122,7 +117,7 @@ GArrayPushBackP(
 
     const uint32_t item_size = sizeof(char *);
 
-    uint8_t status = GArrayResize8(array, array->data_len + 1);
+    uint8_t status = GArrayResizeP(array, array->data_len + 1);
     if(status == EXIT_SUCCESS)
     {   
         uint8_t *data = array->data;
@@ -137,7 +132,7 @@ GArrayPushBackP(
 
 int
 GArrayPopBackP(
-    GArray *array
+    GArrayP *array
     )
 {
     if(!array)
@@ -147,8 +142,8 @@ GArrayPopBackP(
     if(array->data)
     {   
         /* make sure no underflow */
-        if(array->item_len)
-        {   GArrayResize8(array, array->item_len - 1);
+        if(array->data_len)
+        {   GArrayResizeP(array, array->data_len - 1);
         }
     }
     return EXIT_SUCCESS;
@@ -156,7 +151,7 @@ GArrayPopBackP(
 
 int
 GArrayReplaceP(
-    GArray *array,
+    GArrayP *array,
     void *item_cpy,
     uint32_t index
     )
@@ -184,7 +179,7 @@ GArrayReplaceP(
 
 int
 GArrayInsertP(
-    GArray *array,
+    GArrayP *array,
     void *item_cpy,
     uint32_t index
     )
@@ -196,7 +191,7 @@ GArrayInsertP(
     {   return EXIT_FAILURE;
     }
 
-    uint8_t status = GArrayResize8(array, array->data_len + 1);
+    uint8_t status = GArrayResizeP(array, array->data_len + 1);
 
     if(status == EXIT_SUCCESS)
     {   
@@ -222,7 +217,7 @@ GArrayInsertP(
 
 int
 GArrayDeleteP(
-    GArray *array,
+    GArrayP *array,
     uint32_t index
     )
 {
@@ -245,14 +240,14 @@ GArrayDeleteP(
     {   memmove(dest, src, BYTES_MOVE);
     }
 
-    GArrayResize8(array, array->data_len - 1);
+    GArrayResizeP(array, array->data_len - 1);
     return EXIT_SUCCESS;
 }
 
 
 void *
 GArrayAtP(
-        GArray *array,
+        GArrayP *array,
         uint32_t index
         )
 {
@@ -265,14 +260,14 @@ GArrayAtP(
 
 int
 GArrayAtSafeP(
-        GArray *array,
+        GArrayP *array,
         uint32_t index,
         void *fill_return
         )
 {
     const uint32_t item_size = sizeof(char *);
 
-    void *data = GArrayAt8(array, index);
+    void *data = GArrayAtP(array, index);
     int ret = EXIT_FAILURE;
     if(fill_return)
     {
@@ -288,7 +283,7 @@ GArrayAtSafeP(
 
 uint32_t
 GArrayEndP(
-        GArray *array
+        GArrayP *array
         )
 {
     if(array)
@@ -299,7 +294,7 @@ GArrayEndP(
 
 uint32_t 
 GArrayStartP(
-        GArray *array
+        GArrayP *array
         )
 {   return (const unsigned int) 0;
 }

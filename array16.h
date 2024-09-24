@@ -74,7 +74,7 @@ GArrayEnd16(
         );
 
 uint32_t 
-GArrayStart(
+GArrayStart16(
         GArray *array
         );
 
